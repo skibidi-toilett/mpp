@@ -1805,6 +1805,7 @@ $(function () {
   var gHidePiano = localStorage.hidePiano == "true";
   var gHideChat = localStorage.hideChat == "true";
   var gNoPreventDefault = localStorage.noPreventDefault == "true";
+  var gSendStore = localStorage.sendStore == "true";
 //   var gWarnOnLinks = localStorage.warnOnLinks ? loalStorage.warnOnLinks == "true" : true;
 
 
@@ -3250,17 +3251,17 @@ $(function () {
       send: function (message) {
         if (gIsReplying) {
           if (gIsDming) {
-            gClient.sendArray([{ m: 'dm', reply_to: gMessageId, _id: gReplyParticipant._id, message }]);
+            gClient.sendArray([{ m: 'dm', reply_to: gMessageId, _id: gReplyParticipant._id, message, save: gSendStore }]);
             setTimeout(() => { MPP.chat.cancelReply(); }, 100);
           } else {
-            gClient.sendArray([{m: 'a', reply_to: gMessageId, _id: gReplyParticipant._id, message }]);
+            gClient.sendArray([{m: 'a', reply_to: gMessageId, _id: gReplyParticipant._id, message, save: gSendStore }]);
             setTimeout(() => { MPP.chat.cancelReply(); }, 100);
           }
         } else {
           if (gIsDming) {
-            gClient.sendArray([{ m: 'dm', _id: gDmParticipant._id, message }]);
+            gClient.sendArray([{ m: 'dm', _id: gDmParticipant._id, message, save: gSendStore }]);
           } else {
-            gClient.sendArray([{ m: "a", message }]);
+            gClient.sendArray([{ m: "a", message, save: gSendStore }]);
           }
         }
       },
@@ -4320,6 +4321,19 @@ $(function () {
           html.appendChild(setting);
         })();
 
+	(function () {
+	  var setting = document.createElement("div");
+         setting.classList = "setting";
+	setting.innerText = "Don't send server-storable messages";
+	if (gSendStore) {
+	    setting.classList.toggle("enabled");
+	}
+	setting.onclick = function () {
+		localStorage.sendStore = setting.classList.contains("enabled");
+		gSendStore = setting.classList.contains("enabled");
+	}
+	html.appendChild(setting)
+	})();
 
         // warn on links
         /*(function() {
@@ -4556,6 +4570,11 @@ $(function () {
                   $("#cursors").show();
               }
             });
+
+	    createSetting("send-store-messages", "Don't send server-storable messages", gSendStore, true, html, () => {
+		gSendStore = !gSendStore;
+		localStorage.sendStore = gSendStore;
+	    })
 
             content.appendChild(html);
             break;
