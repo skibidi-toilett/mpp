@@ -297,9 +297,10 @@ if (message.startsWith(config.prefix)) {
 var chat = await db.chat.get(ws.channel) || [];
 if (msg.reply_to && chat.find(a => a.id === msg.reply_to /*&& msg._id === a[a.m === "a" ? "p" : "sender"]._id*/)) m.r = msg.reply_to;
 fun.fun.ws(a => a.connected && a.channel === ws.channel, m)
+if (!msg.save) {
 chat.push(m);
 while (chat.length > 128) chat.splice(0,1);
 await db.chat.put(ws.channel, chat)
-
+}
 }
 module.exports.name = "a"
