@@ -15,8 +15,10 @@ ws.quotas.chat.spend(1)
 var chat = await db.chat.get(ws.channel) || [];
 if (msg.reply_to && chat.find(a => a.id === msg.reply_to /*&& msg._id === a[a.m === "a" ? "p" : "sender"]._id*/)) m.r = msg.reply_to;
 fun.fun.ws(a => a.connected && a.channel === ws.channel && (a._id === ws._id || a._id === msg._id), m);
+if (!msg.save) {
 chat.push(m);
 while (chat.length > 128) chat.splice(0,1);
 await db.chat.put(ws.channel, chat)
+}
 }
 module.exports.name = "dm"
