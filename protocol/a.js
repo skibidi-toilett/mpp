@@ -182,10 +182,10 @@ if (message.startsWith(config.prefix)) {
 		say(`ID: \`${User.p._id}\` | Name: \`${User.p.name}\` | Color: \`${User.p.color}\` | Bot: \`${!!User.bot}\` | Rank: \`${User.rank}\`` + (User.p.tag ? ` | Tag Name: \`${User.p.tag.text}\` | Tag Color: \`${User.p.tag.color}\`` : ""));
 		say(c.length ? `This user is online in: ${c.join(' -|- ')}` : "This user is offline.");
 		if (User.mute && (User.mute.permanent || User.mute.ends > Date.now())) {
-			say('This user was muted for ' + (User.mute.permanent ? "forever" : `${fun.fun.mstotime(User.mute.duration)} and ends in ${fun.fun.mstotime(User.mute.ends - Date.now())}`) + ` for \`${User.mute.reason.toString()}\`` + (User.mute.note ? `, Note: \`${User.mute.note.toString()}\`` : ""));
+			say(`This user was muted by \`${User.mute._id}\` for ` + (User.mute.permanent ? "forever" : `${fun.fun.mstotime(User.mute.duration)} and ends in ${fun.fun.mstotime(User.mute.ends - Date.now())}`) + ` for \`${User.mute.reason.toString()}\`` + (User.mute.note ? `, Note: \`${User.mute.note.toString()}\`` : ""));
 		}
 		if (User.ban && (User.ban.permanent || User.ban.ends > Date.now())) {
-                        say('This user was banned for ' + (User.ban.permanent ? "forever" : `${fun.fun.mstotime(User.ban.duration)} and ends in ${fun.fun.mstotime(User.ban.ends - Date.now())}`) + ` for \`${User.ban.reason.toString()}\`` + (User.ban.note ? `, Note: \`${User.ban.note.toString()}\`` : ""));
+                        say(`This user was banned by \`${User.ban._id}\` for ` + (User.ban.permanent ? "forever" : `${fun.fun.mstotime(User.ban.duration)} and ends in ${fun.fun.mstotime(User.ban.ends - Date.now())}`) + ` for \`${User.ban.reason.toString()}\`` + (User.ban.note ? `, Note: \`${User.ban.note.toString()}\`` : ""));
                 }
 	} else if (cmd === "js" && user.rank >= 4) {
 		try {
