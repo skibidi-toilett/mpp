@@ -27,7 +27,7 @@ var bans = {};
 for (var i = 0; i < roomlist.length; i++) {
 bans[roomlist[i]._id] = await db.bans.get(roomlist[i]._id) || {};
 }
-ws.sendData({m: "ls", c: true, u: roomlist.filter(r => user.rank >= 2 || r.settings.visible).map(ro => {var r = JSON.parse(JSON.stringify(ro)); if (!(bans[r._id][ws._id] && bans[r._id][ws._id] > Date.now())) return r; r.banned = true; return r; })})
+ws.sendData({m: "ls", c: true, u: roomlist.filter(r => user.rank >= 2 || r.settings.visible).map(ro => {var r = JSON.parse(JSON.stringify(ro)); if (!(bans[r._id][ws._id] && bans[r._id][ws._id] > Date.now())) return r; r.banned = true; return r; }).sort((a, b) => ((a.count < b.count) ? 1 : ((a.count > b.count) ? -1 : 0)) )})
 ws.quotas.ls.spend(1)
 }
 module.exports.name = "+ls"
