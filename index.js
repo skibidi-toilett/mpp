@@ -276,7 +276,7 @@ if (roomban[a] && roomban[a] > Date.now()) bandata[a] = roomban[a];
 bans[rname] = bandata
 }
 //console.log(bans)
-var validset = ['color', 'color2', 'visible', 'limit', 'crownsolo', 'no cussing', 'chat', 'noindex']
+var validset = ['color', 'color2', 'visible', 'limit', 'crownsolo', 'no cussing', 'chat', 'noindex', 'allowBots']
 var filteredrooms = Object.values(roomlist).filter(c => !oldroomlist[c._id] || oldroomlist[c._id].count !== c.count || validset.find(s => c.settings[s] !== oldroomlist[c._id].settings[s]) || Object.keys(bans[c._id]).length != Object.keys(oldbans[c._id]).length || (!c.settings.lobby && c.crown.userId !== oldroomlist[c._id].crown.userId))
 //var vanishdata = await fun.fun.vanishperms();
 
