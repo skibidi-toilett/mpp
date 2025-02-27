@@ -1672,6 +1672,8 @@ $(function () {
           $("#room-settings .checkbox[name=chat]").prop("checked", settings.chat);
           $("#room-settings .checkbox[name=crownsolo]").prop("checked", settings.crownsolo);
           $("#room-settings .checkbox[name=nocussing]").prop("checked", settings["no cussing"]);
+          $("#room-settings .checkbox[name=noindex]").prop("checked", settings.noindex);
+          $("#room-settings .checkbox[name=allowBots]").prop("checked", settings.allowBots);
           $("#room-settings input[name=color]").val(settings.color);
           $("#room-settings input[name=color2]").val(settings.color2);
           $("#room-settings input[name=limit]").val(settings.limit);
@@ -1684,6 +1686,8 @@ $(function () {
         chat: $("#room-settings .checkbox[name=chat]").is(":checked"),
         crownsolo: $("#room-settings .checkbox[name=crownsolo]").is(":checked"),
         "no cussing": $("#room-settings .checkbox[name=nocussing]").is(":checked"),
+        noindex: $("#room-settings .checkbox[name=noindex]").is(":checked"),
+        allowBots: $("#room-settings .checkbox[name=allowBots]").is(":checked"),
         color: $("#room-settings input[name=color]").val(),
         color2: $("#room-settings input[name=color2]").val(),
         limit: $("#room-settings input[name=limit]").val(),
