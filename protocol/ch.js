@@ -33,7 +33,7 @@ if (users.includes(a._id)) return;
 users.push(a._id)
 })
 //if (users.length >= chraw.settings.limit && (chraw.crown && chraw.crown.userId !== ws._id) && !users.includes(ws._id) && user.rank < 1) {
-if ((users.length >= chraw.ch.settings.limit && (user.bot && !chraw.ch.settings.allowBots)) chraw.owner() !== ws._id && !users.includes(ws._id) && user.rank < 1) {
+if ((users.length >= chraw.ch.settings.limit || (user.bot && !chraw.ch.settings.allowBots)) && chraw.owner() !== ws._id && !users.includes(ws._id) && user.rank < 1) {
 //console.log('full')
 var full = true;
 channelPart++
