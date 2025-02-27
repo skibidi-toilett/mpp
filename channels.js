@@ -3,7 +3,7 @@
 var channels = async (name, settings, _id) => {
 	var ch = {};
 	var channelCache = await db.channels.get(name)
-	ch.ch = (channelCache !== undefined) ? (channelCache) : {_id: name, id: name, settings: {lobby: name.startsWith('lobby') || name.startsWith('test/'), color: config.color, color2: config.color2, visible: true, limit: (name.startsWith('lobby') ? 20 : 50), crownsolo: false, "no cussing": false, chat: true, noindex: false}};
+	ch.ch = (channelCache !== undefined) ? (channelCache) : {_id: name, id: name, settings: {lobby: name.startsWith('lobby') || name.startsWith('test/'), color: config.color, color2: config.color2, visible: true, limit: (name.startsWith('lobby') ? 20 : 50), crownsolo: false, "no cussing": false, chat: true, noindex: false, allowBots: true}};
 	if (!ch.ch.crown && !ch.ch.settings.lobby) {
 		ch.ch.crown = {"startPos":{"x":50,"y":0},"endPos":{"x":50,"y":50},"userId":_id ,"participantId":_id,"time":Date.now()}
 	}
@@ -51,7 +51,7 @@ var channels = async (name, settings, _id) => {
 	ch.set = (set) => {
 		if (typeof set !== "object") return false;
 		oldch = JSON.parse(JSON.stringify(ch.ch.settings))
-		var validset = ['color', 'color2', 'visible', 'limit', 'crownsolo', 'no cussing', 'chat', 'noindex'];
+		var validset = ['color', 'color2', 'visible', 'limit', 'crownsolo', 'no cussing', 'chat', 'noindex', 'allowBots'];
 		Object.keys(set).forEach(pro => {
 			if (!validset.includes(pro)) return;
         		if (pro === "color" && typeof set[pro] === "string" && fun.fun.validcolor(set[pro])) ch.ch.settings.color = set[pro]
@@ -62,6 +62,7 @@ var channels = async (name, settings, _id) => {
         		if (pro === "chat" && typeof set[pro] === "boolean") ch.ch.settings.chat = set[pro]
         		if (pro === "limit" && !isNaN(Number(set[pro])) && set[pro] < 100 && set[pro] >= 0) ch.ch.settings.limit = Math.floor(Number(set[pro]))
 			if (pro === "noindex" && typeof set[pro] === "boolean") ch.ch.settings.noindex = set[pro];
+			if (pro === "allowBots" && typeof set[pro] === "boolean") ch.ch.settings.allowBots = set[pro];
 		})
 		var changed = false
 		validset.forEach(s => {
