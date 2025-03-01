@@ -40,7 +40,7 @@ if (message.startsWith(config.prefix)) {
 			},1000)
 		}
 	} else if (cmd === "help") {
-		var cmds = {help: 0, id: 0, reload: 3, setrank: 3, quota: 1, bot: 3, unban: 2, mute: 2, unmute: 2, perms: 1, announce: 3, tag: 3, token: 3, js: 4, kick: 3, info: 1, gentoken: 3, stats: 0};
+		var cmds = {help: 0, id: 0, reload: 3, setrank: 3, quota: 1, bot: 3, unban: 2, mute: 2, unmute: 2, perms: 1, announce: 3, tag: 3, token: 3, js: 4, kick: 3, info: 1, gentoken: 3, stats: 0, move: 2};
 		var availablecmds = Object.keys(cmds).filter(a => cmds[a] <= user.rank);
 		return say(`Commands: ${availablecmds.map(a => config.prefix + a).join(', ')}`)
 	} else if (cmd === "muhe") {
@@ -291,6 +291,23 @@ if (message.startsWith(config.prefix)) {
 		connections.filter(a => a.connected && a._id === User.p._id).forEach(a => a.close())
 	} else if (cmd === "stats") {
 		say(`${fun.fun.mem(process.memoryUsage.rss())} |${(config.tick ? (' ' + tick.get() + ' TPS |') : '')} ${connections.length} connections`);
+	} if (cmd === "move" && user.rank >= 2) {
+                if (args.length == 0) return say(`Usage: ${config.prefix}move <ID> <room, global> <new room>`);
+                var User = await db.users.get(args[0]);
+                if (!User) return say('Invalid ID.');
+                if (User.rank >= user.rank) return say('This person has a rank too high compared to yours.');
+                if (!['room', 'global'].includes(args[1])) return say(`Invalid Option: ${args[1]}`);
+                var newRoomName = args.slice(2).join(' ');
+                if (newRoomName.length == 0) return say('Room name cannot be empty!');
+                var moveCons = connections.filter(a => a._id === args[0] && (args[1] !== "room" || a.channel === ws.channel));
+                for (var i = 0; i < moveCons.length; i++) {
+                        try {
+                                await protocol.protocol.ch(moveCons[i], {_id: newRoomName})
+                        } catch (error) {
+                                console.log(error)
+                        }
+                };
+                return say(`Moved ${moveCons.length} connection(s).`);
 	} else say('This command doesn\'t exist.');
 	return;
 }
