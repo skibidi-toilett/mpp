@@ -1,4 +1,7 @@
 {
   "name": "spongebob",
-  "version": "1.0"
+  "version": "1.0",
+  "dependencies": {
+    "uWebSockets.js": "^20.4.0"
+  }
 }
