@@ -2,6 +2,6 @@
   "name": "spongebob",
   "version": "1.0",
   "dependencies": {
-    "uwebsockets.js": "github:uNetworking/uWebSockets.js#v20.4.0"
+    "uwebsockets": "github:uNetworking/uWebSockets.js#v20.4.0"
   }
 }
